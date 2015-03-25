@@ -1,0 +1,23 @@
+def dff(d,clk,reset,q);
+"""
+  D flipflop 
+  d -- input  
+  clk -- clock input
+  reset -- asynchronous reset input
+  q -- output
+"""
+@always_seq (clock.posedge, reset=reset)
+    def dfflogic:
+        if reset:
+            q = 0
+        else:
+            q = d
+    return dfflogic()
+    
+
+q = Signal(bool(0))
+clock  = Signal(bool(0))
+reset = ResetSignal(0, active=0, async=True)
+
+dff_inst = toVerilog(dff, d, clock, reset, q)
+        
