@@ -1,26 +1,27 @@
 from myhdl import *
-import myhdl_tools as tlz
 
-def dff(d,clk,reset,q);
+def dff(d, clk, reset, q):
   """
-  D flipflop 
+  dff 
   d -- input  
   clk -- clock input
   reset -- asynchronous reset input
   q -- output
   """
-  @always_seq (clock.posedge, reset=reset)
-    def dfflogic:
+  @always_seq (clk.posedge, reset)
+  def dfflogic():
         if reset:
-            q = 0
+            q.next = 0 
         else:
-            q = d
-    return dfflogic()
-    
+            q.next = d
+            
+  return dfflogic
+  
 
 q = Signal(bool(0))
-clock  = Signal(bool(0))
+d = Signal(bool(0))
+clk  = Signal(bool(0))
 reset = ResetSignal(0, active=0, async=True)
-
-dff_inst = toVerilog(dff, d, clock, reset, q)
+dff_inst = dff(d, clk, reset, q)
+dff_inst = toVerilog(dff, d, clk, reset, q)
         
