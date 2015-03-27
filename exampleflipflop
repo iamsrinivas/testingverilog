@@ -1,12 +1,15 @@
+from myhdl import *
+import myhdl_tools as tlz
+
 def dff(d,clk,reset,q);
-"""
+  """
   D flipflop 
   d -- input  
   clk -- clock input
   reset -- asynchronous reset input
   q -- output
-"""
-@always_seq (clock.posedge, reset=reset)
+  """
+  @always_seq (clock.posedge, reset=reset)
     def dfflogic:
         if reset:
             q = 0
